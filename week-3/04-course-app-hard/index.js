@@ -1,54 +1,23 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
+const adminRoutes = require('./src/routes/adminRoutes');
+const userRoutes = require('./src/routes/userRoutes');
+const connectDB = require('./src/config/database');
+
 const app = express();
 
 app.use(express.json());
 
-let ADMINS = [];
-let USERS = [];
-let COURSES = [];
+app.use('/admin', adminRoutes);
+app.use('/users', userRoutes);
 
-// Admin routes
-app.post('/admin/signup', (req, res) => {
-  // logic to sign up admin
-});
-
-app.post('/admin/login', (req, res) => {
-  // logic to log in admin
-});
-
-app.post('/admin/courses', (req, res) => {
-  // logic to create a course
-});
-
-app.put('/admin/courses/:courseId', (req, res) => {
-  // logic to edit a course
-});
-
-app.get('/admin/courses', (req, res) => {
-  // logic to get all courses
-});
-
-// User routes
-app.post('/users/signup', (req, res) => {
-  // logic to sign up user
-});
-
-app.post('/users/login', (req, res) => {
-  // logic to log in user
-});
-
-app.get('/users/courses', (req, res) => {
-  // logic to list all courses
-});
-
-app.post('/users/courses/:courseId', (req, res) => {
-  // logic to purchase a course
-});
-
-app.get('/users/purchasedCourses', (req, res) => {
-  // logic to view purchased courses
+//Connect to mongodb atlas
+connectDB();
+mongoose.connection.on('error', (error) => {
+	console.log(error);
 });
 
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+	console.log('Server is listening on port 3000');
 });
